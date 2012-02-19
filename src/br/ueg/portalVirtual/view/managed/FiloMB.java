@@ -2,12 +2,16 @@ package br.ueg.portalVirtual.view.managed;
 
 import java.util.List;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
 import br.ueg.portalVirtual.control.Control;
 import br.ueg.portalVirtual.model.Filo;
 import br.ueg.portalVirtual.model.Reino;
 
+@ManagedBean
+@SessionScoped
 public class FiloMB extends MB<Filo> {
 
 	private List<Reino> reinos;
