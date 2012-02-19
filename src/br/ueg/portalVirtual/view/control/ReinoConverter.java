@@ -6,8 +6,8 @@ import javax.faces.convert.FacesConverter;
 
 import br.ueg.portalVirtual.model.Reino;
 
-@FacesConverter
-public class Converter implements javax.faces.convert.Converter {
+@FacesConverter(value = "reinoconverter")
+public class ReinoConverter implements javax.faces.convert.Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,

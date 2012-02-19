@@ -60,7 +60,8 @@
 					<p:inputText value="#{filoMB.entity.filo}" />
 					<h:outputText value="#{msg.reino_reino}" />
 					<h:selectOneListbox value="#{filoMB.entity.reino}" id="selectReino"
-						size="1" converter="#{converter}">
+						size="1">
+						<f:converter converterId="reinoconverter"></f:converter>
 						<f:selectItem itemLabel="#{msg.filo_select}" itemValue="" />
 						<f:selectItems value="#{filoMB.reinos}" var="reinos"
 							itemLabel="#{reinos.reino}" itemValue="#{reinos}" />

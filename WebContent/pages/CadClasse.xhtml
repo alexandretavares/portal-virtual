@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:composition template="../template/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msg.classe_title}" />
+	</ui:define>
+	<ui:define name="context">
+		<h:form>
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{msg.classe_add}" oncomplete="dlg.show();"
+					actionListener="#{classeMB.listFilo}" update="formCad" />
+				<p:commandButton value="#{msg.button_list}" ajax="false"
+					action="#{classeMB.list}" update="listPanel" />
+				<p:inputText value="#{classeMB.busca}" />
+				<p:commandButton value="#{msg.button_search}" ajax="false"
+					action="#{classeMB.find}" />
+			</h:panelGrid>
+			<p:dataTable rendered="#{classeMB.listing}"
+				value="#{classeMB.listEntity}" var="classes" rows="5"
+				emptyMessage="#{msg.classe_empty}" paginator="true">
+				<p:column headerText="#{msg.classe_classeColumn}">
+					<h:outputText value="#{classes.classe}" />
+				</p:column>
+				<p:column headerText="#{msg.filo_filoColumn}">
+					<h:outputText value="#{classes.filo.filo}" />
+				</p:column>
+				<p:column headerText="#{msg.column_edit}">
+					<p:commandLink actionListener="#{classeMB.listFilo}"
+						update="formCad" oncomplete="dlg.show();">
+						<f:setPropertyActionListener target="#{classeMB.entity}"
+							value="#{classes}" />
+						<p:graphicImage
+							value="#{pageContext.servletContext.contextPath}/images/editar.png"
+							title="#{msg.column_edit}" />
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="#{msg.column_delete}">
+					<p:commandLink action="#{classeMB.delete}" ajax="false">
+						<p:graphicImage
+							value="#{pageContext.servletContext.contextPath}/images/lixeira.png"
+							title="#{msg.column_delete}" />
+						<f:setPropertyActionListener target="#{classeMB.entity}"
+							value="#{classes}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<p:messages showDetail="true" showSummary="false" />
+		</h:form>
+		<p:dialog widgetVar="dlg" modal="true" closable="true"
+			header="#{msg.classe_header}" width="450">
+			<h:form id="formCad">
+				<h:panelGrid columns="2">
+					<h:outputText value="#{msg.classe_classe}" />
+					<p:inputText value="#{classeMB.entity.classe}" />
+					<h:outputText value="#{msg.filo_filo}" />
+					<h:selectOneListbox value="#{classeMB.entity.filo}" id="selectFilo"
+						size="1">
+						<f:converter converterId="filoconverter"/>
+						<f:selectItem itemLabel="#{msg.classe_select}" itemValue="" />
+						<f:selectItems value="#{classeMB.filos}" var="filos"
+							itemLabel="#{filos.filo}" itemValue="#{filos}" />
+					</h:selectOneListbox>
+				</h:panelGrid>
+				<p:column>
+					<p:commandButton value="#{msg.button_save}"
+						action="#{classeMB.saveOrUpdate}" ajax="false" />
+					<p:commandButton value="#{msg.button_cancel}" onclick="dlg.hide();"
+						actionListener="#{classeMB.cancel}" />
+				</p:column>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>
