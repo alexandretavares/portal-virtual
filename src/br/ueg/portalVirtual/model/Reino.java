@@ -15,7 +15,7 @@ public class Reino extends Entity {
 
 	@Id
 	@GeneratedValue
-	@OneToMany(targetEntity = Filo.class, mappedBy = "reino")
+	//@OneToMany(targetEntity = Filo.class, mappedBy = "reino")
 	@Column(name = "id_reino")
 	private long id;
 	

@@ -16,7 +16,7 @@ public class Filo extends Entity {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id_reino")
+	@Column(name = "id_filo")
 	private long id;
 
 	@Column(name = "nome")

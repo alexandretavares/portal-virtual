@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+<ui:composition template="../template/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msg.filo_title}" />
+	</ui:define>
+	<ui:define name="context">
+		<h:form>
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{msg.filo_add}" oncomplete="dlg.show();"
+					actionListener="#{filoMB.listReino}" update="formCad" />
+				<p:commandButton value="#{msg.button_list}" ajax="false"
+					action="#{filoMB.list}" update="listPanel" />
+				<p:inputText value="#{filoMB.busca}" />
+				<p:commandButton value="#{msg.button_search}" ajax="false"
+					action="#{filoMB.find}" />
+			</h:panelGrid>
+			<p:dataTable rendered="#{filoMB.listing}"
+				value="#{filoMB.listEntity}" var="filos" rows="5"
+				emptyMessage="#{msg.filo_empty}" paginator="true">
+				<p:column headerText="#{msg.filo_filoColumn}">
+					<h:outputText value="#{filos.filo}" />
+				</p:column>
+				<p:column headerText="#{msg.reino_reinoColumn}">
+					<h:outputText value="#{filos.reino.reino}" />
+				</p:column>
+				<p:column headerText="#{msg.column_edit}">
+					<p:commandLink actionListener="#{filoMB.listReino}"
+						update="formCad" oncomplete="dlg.show();">
+						<f:setPropertyActionListener target="#{filoMB.entity}"
+							value="#{filos}" />
+						<p:graphicImage
+							value="#{pageContext.servletContext.contextPath}/images/editar.png"
+							title="#{msg.column_edit}" />
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="#{msg.column_delete}">
+					<p:commandLink action="#{filoMB.delete}" ajax="false">
+						<p:graphicImage
+							value="#{pageContext.servletContext.contextPath}/images/lixeira.png"
+							title="#{msg.column_delete}" />
+						<f:setPropertyActionListener target="#{filoMB.entity}"
+							value="#{filos}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<p:messages showDetail="true" showSummary="false" />
+		</h:form>
+		<p:dialog widgetVar="dlg" modal="true" closable="true"
+			header="#{msg.filo_header}">
+			<h:form id="formCad">
+				<h:panelGrid columns="2">
+					<h:outputText value="#{msg.filo_filo}" />
+					<p:inputText value="#{filoMB.entity.filo}" />
+					<h:outputText value="#{msg.reino_reino}" />
+					<h:selectOneListbox value="#{filoMB.entity.reino}" id="selectReino"
+						size="1" converter="#{converter}">
+						<f:selectItem itemLabel="#{msg.filo_select}" itemValue="" />
+						<f:selectItems value="#{filoMB.reinos}" var="reinos"
+							itemLabel="#{reinos.reino}" itemValue="#{reinos}" />
+					</h:selectOneListbox>
+				</h:panelGrid>
+				<p:column>
+					<p:commandButton value="#{msg.button_save}"
+						action="#{filoMB.saveOrUpdate}" ajax="false" />
+					<p:commandButton value="#{msg.button_cancel}" onclick="dlg.hide();"
+						actionListener="#{filoMB.cancel}" />
+				</p:column>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>
