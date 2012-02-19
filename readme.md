@@ -15,5 +15,5 @@ Projeto de estudo utilizando JSF, Primefaces, Hibernate, Spring.
 Spring 3.0 e PrimeFaces 2.2.1 
 
 * Autor: Diego Carlos Rezende 
-Graduando em Sistemas de InformaÃ§Ã£o 
-Universidade Estadual de GoiÃ¡s - UEG UnUCET
+Graduando em Sistemas de Informação 
+Universidade Estadual de Goiás - UEG UnUCET
